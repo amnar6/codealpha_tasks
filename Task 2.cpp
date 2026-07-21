@@ -21,7 +21,6 @@ bool usernameExists(string username)
 {
     ifstream file(FILE_NAME);
     
-    //return false immediately if file doesn't exist yet
     if (!file.is_open()) {
         return false;
     }
@@ -40,7 +39,7 @@ bool usernameExists(string username)
     return false;
 }
 
-//registers a new user by appending their details to the file
+// registers a new user by appending their details to the file
 void registerUser() {
     string username, password;
 
@@ -57,23 +56,26 @@ void registerUser() {
     cout << "Choose a password: ";
     cin >> password;
 
-    //appending (not overwriting) so that the previous users stay in the file
+    // appending (not overwriting) so that the previous users stay in the file
     ofstream file(FILE_NAME, ios::app);
     
-    //check if file opened properly for writing
+    //check if the file opened properly for writing before attempting to write
     if (!file.is_open()) {
         cout << "Error: Could not open file for writing." << endl;
         return;
     }
 
     file << username << " " << password << endl;
-    file.flush(); //forces buffer to write file to disk immediately
+    
+    //force stream buffer to write data to disk immediately so file appears in VS Code sidebar
+    file.flush(); 
+    
     file.close();
 
     cout << "Registration successful! You can now log in." << endl;
 }
 
-//logs a user in by checking their credentials against the file
+// logs a user in by checking their credentials against the file
 void loginUser() {
     string username, password;
 
@@ -85,7 +87,7 @@ void loginUser() {
 
     ifstream file(FILE_NAME);
 
-    //check if users file exists before attempting to read
+    //check if users file exists before attempting to read from it
     if (!file.is_open()) {
         cout << "Login failed: No registered users found." << endl;
         return;
